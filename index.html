@@ -1561,6 +1561,7 @@
 function showProjectDetail(projectId) {
     const project = projectsData[projectId];
     if (!project) return;
+    console.log('Project data:', project); // Add this line
     const detailContainer = document.getElementById('projectDetail');
     // Set content
     document.getElementById('projectDetailTitle').textContent = project.title;
