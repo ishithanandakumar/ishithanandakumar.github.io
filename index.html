@@ -1566,7 +1566,6 @@ function showProjectDetail(projectId) {
     // Set content
     document.getElementById('projectDetailTitle').textContent = project.title;
     document.getElementById('projectDetailSubtitle').textContent = project.subtitle;
-    document.getElementById('githubLink').href = project.github || '#';
     document.getElementById('challengeText').textContent = project.challenge;
     document.getElementById('implementationText').textContent = project.implementation;
     document.getElementById('impactText').textContent = project.impact;
@@ -1613,16 +1612,18 @@ function showProjectDetail(projectId) {
         `<span class="tech-tag-detail">${tech}</span>`
     ).join('');
     // Update GitHub link text based on presence
-    const githubLink = document.getElementById('githubLink');
-    if (project.github && project.github !== '#') {
-        githubLink.textContent = 'View on GitHub';
-    } else if (project.tableauPublic) {
-        githubLink.href = project.tableauPublic;
-        githubLink.textContent = 'View on Tableau Public';
-    } else {
-        githubLink.textContent = 'View Project';
-        githubLink.href = '#';
-    }
+// Update GitHub link - FIXED
+const githubLink = document.getElementById('githubLink');
+if (project.github) {
+    githubLink.href = project.github;
+    githubLink.textContent = 'View on GitHub';
+} else if (project.tableauPublic) {
+    githubLink.href = project.tableauPublic;
+    githubLink.textContent = 'View on Tableau Public';
+} else {
+    githubLink.href = '#';
+    githubLink.textContent = 'View Project';
+}
     // Show the detail view
     detailContainer.classList.add('active');
     document.body.style.overflow = 'hidden';
