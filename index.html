@@ -1558,75 +1558,75 @@
             menuToggle.setAttribute('aria-expanded', !isExpanded);
         });
         // Show Project Detail
-        function showProjectDetail(projectId) {
-            const project = projectsData[projectId];
-            if (!project) return;
-            const detailContainer = document.getElementById('projectDetail');
-            // Set content
-            document.getElementById('projectDetailTitle').textContent = project.title;
-            document.getElementById('projectDetailSubtitle').textContent = project.subtitle;
-            document.getElementById('githubLink').href = project.github || '#';
-            document.getElementById('challengeText').textContent = project.challenge;
-            document.getElementById('implementationText').textContent = project.implementation;
-            document.getElementById('impactText').textContent = project.impact;
-            // Set images if available
-            if (project.images) {
-                const challengeImg = document.getElementById('challengeImage');
-                const implImg1 = document.getElementById('implImage1');
-                const implImg2 = document.getElementById('implImage2');
-                const impactImg1 = document.getElementById('impactImage1');
-                const impactImg2 = document.getElementById('impactImage2');
-                function loadImage(imgElement, src, alt) {
-                    if (src) {
-                        imgElement.src = src;
-                        imgElement.alt = alt;
-                        imgElement.classList.add('loaded');
-                        imgElement.onerror = function() {
-                            this.classList.remove('loaded');
-                            this.src = '';
-                            console.log(`Failed to load image at ${src}`);
-                        };
-                    } else {
-                        imgElement.src = '';
-                        imgElement.classList.remove('loaded');
-                    }
-                }
-                loadImage(challengeImg, project.images.challenge, 'Challenge visualization');
-                loadImage(implImg1, project.images.implementation1, 'Implementation detail 1');
-                loadImage(implImg2, project.images.implementation2, 'Implementation detail 2');
-                loadImage(impactImg1, project.images.impact1, 'Impact detail 1');
-                loadImage(impactImg2, project.images.impact2, 'Impact detail 2');
-            }
-            // Set metrics
-            const metricsGrid = document.getElementById('metricsGrid');
-            metricsGrid.innerHTML = project.metrics.map(metric => `
-                <div class="metric-card">
-                    <div class="metric-icon">${metric.icon}</div>
-                    <div class="metric-value">${metric.value}</div>
-                    <div class="metric-label">${metric.label}</div>
-                </div>
-            `).join('');
-            // Set technologies
-            const techTags = document.getElementById('techTagsDetail');
-            techTags.innerHTML = project.technologies.map(tech =>
-                `<span class="tech-tag-detail">${tech}</span>`
-            ).join('');
-            // Update GitHub link text based on presence
-            const githubLink = document.getElementById('githubLink');
-            if (project.github && project.github !== '#') {
-                githubLink.textContent = 'View on GitHub';
-            } else if (project.tableauPublic) {
-                githubLink.href = project.tableauPublic;
-                githubLink.textContent = 'View on Tableau Public';
+function showProjectDetail(projectId) {
+    const project = projectsData[projectId];
+    if (!project) return;
+    const detailContainer = document.getElementById('projectDetail');
+    // Set content
+    document.getElementById('projectDetailTitle').textContent = project.title;
+    document.getElementById('projectDetailSubtitle').textContent = project.subtitle;
+    document.getElementById('githubLink').href = project.github || '#';
+    document.getElementById('challengeText').textContent = project.challenge;
+    document.getElementById('implementationText').textContent = project.implementation;
+    document.getElementById('impactText').textContent = project.impact;
+    // Set images if available
+    if (project.images) {
+        const challengeImg = document.getElementById('challengeImage');
+        const implImg1 = document.getElementById('implImage1');
+        const implImg2 = document.getElementById('implImage2');
+        const impactImg1 = document.getElementById('impactImage1');
+        const impactImg2 = document.getElementById('impactImage2');
+        function loadImage(imgElement, src, alt) {
+            if (src) {
+                imgElement.src = src;
+                imgElement.alt = alt;
+                imgElement.classList.add('loaded');
+                imgElement.onerror = function() {
+                    this.classList.remove('loaded');
+                    this.src = '';
+                    console.log(`Failed to load image at ${src}`);
+                };
             } else {
-                githubLink.textContent = 'View Project';
-                githubLink.href = '#';
+                imgElement.src = '';
+                imgElement.classList.remove('loaded');
             }
-            // Show the detail view
-            detailContainer.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            detailContainer.focus();
         }
+        loadImage(challengeImg, project.images.challenge, 'Challenge visualization');
+        loadImage(implImg1, project.images.implementation1, 'Implementation detail 1');
+        loadImage(implImg2, project.images.implementation2, 'Implementation detail 2');
+        loadImage(impactImg1, project.images.impact1, 'Impact detail 1');
+        loadImage(impactImg2, project.images.impact2, 'Impact detail 2');
+    }
+    // Set metrics
+    const metricsGrid = document.getElementById('metricsGrid');
+    metricsGrid.innerHTML = project.metrics.map(metric => `
+        <div class="metric-card">
+            <div class="metric-icon">${metric.icon}</div>
+            <div class="metric-value">${metric.value}</div>
+            <div class="metric-label">${metric.label}</div>
+        </div>
+    `).join('');
+    // Set technologies
+    const techTags = document.getElementById('techTagsDetail');
+    techTags.innerHTML = project.technologies.map(tech =>
+        `<span class="tech-tag-detail">${tech}</span>`
+    ).join('');
+    // Update GitHub link text based on presence
+    const githubLink = document.getElementById('githubLink');
+    if (project.github && project.github !== '#') {
+        githubLink.textContent = 'View on GitHub';
+    } else if (project.tableauPublic) {
+        githubLink.href = project.tableauPublic;
+        githubLink.textContent = 'View on Tableau Public';
+    } else {
+        githubLink.textContent = 'View Project';
+        githubLink.href = '#';
+    }
+    // Show the detail view
+    detailContainer.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    detailContainer.focus();
+}
         // Hide Project Detail
         function hideProjectDetail() {
             const detailContainer = document.getElementById('projectDetail');
